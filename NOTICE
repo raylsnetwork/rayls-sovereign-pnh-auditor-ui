@@ -1,0 +1,25 @@
+# NOTICE
+
+Rayls Auditor Explorer
+Copyright 2026 Rayls Core Ltd.
+
+## Licensing summary
+
+Rayls' own code in this repository is licensed under the **Apache License, Version 2.0** —
+see [LICENSE](./LICENSE).
+
+The repository bundles the third-party font below. It remains under its own license, which is
+reproduced in the `licenses/` directory and continues to apply to that file.
+
+---
+
+## Rethink Sans  (SIL Open Font License 1.1)
+
+Bundled at `src/assets/fonts/RethinkSans.ttf` and referenced via `@font-face` in
+`src/styles.scss`.
+
+Copyright 2022 The Rethink Sans Project Authors
+(https://github.com/hans-thiessen/Rethink-Sans)
+
+Licensed under the SIL Open Font License, Version 1.1. The full license text is reproduced at
+[licenses/OFL.txt](./licenses/OFL.txt).

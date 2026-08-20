@@ -1,0 +1,33 @@
+<div class="messages" [class.messages--hide-token]="hideTokenColumn">
+  <div class="messages__header">
+    <div class="messages__header__title">MessageId</div>
+    <div class="messages__header__title">Timestamp</div>
+    <div class="messages__header__title">Source ChainId</div>
+    <div class="messages__header__title">Source Address</div>
+    <div class="messages__header__title">Destination ChainId</div>
+    <div class="messages__header__title">Destination Address</div>
+    <div class="messages__header__title">Amount</div>
+    <div class="messages__header__title" *ngIf="!hideTokenColumn">Token</div>
+  </div>
+  <div class="messages__body">
+    <ng-container *ngIf="transactions && transactions.length > 0 && !isLoading">
+      <app-batch-transaction-preview
+        *ngFor="let txn of transactions"
+        [transaction]="txn"
+        [hideTokenColumn]="hideTokenColumn"
+        (click)="goToMessageDetails(txn)"
+      ></app-batch-transaction-preview>
+    </ng-container>
+    <ng-container *ngIf="isLoading || (!transactions || transactions.length === 0)">
+      <div *ngFor="let _ of [].constructor(20); index as i" class="messages__body__transaction">
+        <div 
+          *ngFor="let _ of [].constructor(8); index as j" 
+          [style.width]="getRandomWidth(i, j)" 
+          class="messages__body__transaction__value"
+        >
+          <app-skeleton-loading></app-skeleton-loading>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="messages">
+  <div class="messages__header">
+    <div class="messages__header__title">Protocol</div>
+    <div class="messages__header__title">ID</div>
+    <div class="messages__header__title">Timestamp</div>
+    <div class="messages__header__title">Source ChainId</div>
+    <div class="messages__header__title">Source Address</div>
+  </div>
+  <div class="messages__body">
+    <ng-container *ngIf="transactions">
+      <app-message-preview
+        *ngFor="let transaction of transactions.data"
+        [transaction]="transaction"
+        (click)="goToMessageDetails(transaction)"
+      ></app-message-preview>
+    </ng-container>
+    <ng-container *ngIf="!transactions">
+      <div *ngFor="let _ of [].constructor(20); index as i" class="messages__body__transaction">
+        <div
+          *ngFor="let _ of [].constructor(5); index as j"
+          [style.width]="getRandomWidth(i, j)"
+          class="messages__body__transaction__value"
+        >
+          <app-skeleton-loading></app-skeleton-loading>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="messages__pagination" *ngIf="transactions && pages">
+    <div
+      class="messages__pagination__page"
+      [ngClass]="{ 'messages__pagination__page--active': isCurrentPage(1) }"
+      (click)="goToPage(1)"
+    >1</div>
+    <div class="messages__pagination__divisor">...</div>
+    <div
+      class="messages__pagination__page"
+      [ngClass]="{ 'messages__pagination__page--active': isCurrentPage(page) }"
+      *ngFor="let page of getPages(); index as index"
+      (click)="goToPage(page)"
+    >
+      {{ page }}
+    </div>
+    <div class="messages__pagination__divisor">...</div>
+    <div
+      class="messages__pagination__page"
+      [ngClass]="{ 'messages__pagination__page--active': isCurrentPage(pages) }"
+      (click)="goToPage(pages)"
+    >{{ pages }}</div>
+  </div>
+</div>
+

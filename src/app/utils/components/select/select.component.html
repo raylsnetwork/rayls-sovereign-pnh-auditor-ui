@@ -1,0 +1,22 @@
+<div class="select" [formGroup]="form">
+  <div
+    class="select__background"
+    [class.select__background--active]="isFocused"
+  ></div>
+  <select 
+    class="select__select"
+    formControlName="option"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+  >
+    <option
+      [selected]="true"
+      [value]="defaultOption.value"
+    >{{ defaultOption.viewValue }}</option>
+    <option
+      *ngFor="let option of options"
+      [value]="option.value"
+    >{{ option.viewValue }}</option>
+  </select>
+  <img class="select__icon" alt="Down Arrow" src="assets/down-arrow.png" />
+</div>

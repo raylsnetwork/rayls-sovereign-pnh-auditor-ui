@@ -1,0 +1,20 @@
+<div class="copy-and-share">
+  <img 
+    class="copy-and-share__image" 
+    src="assets/copy.png" 
+    [cdkCopyToClipboard]="value.toString()"
+    (click)="copiedToClipboardNotification(field)"
+    nz-tooltip="Copy"
+  />
+  <a 
+    *ngIf="explorerUrl && explorerName"
+    [href]="explorerUrl" 
+    target="_blank"
+    [nz-tooltip]="'View in ' + explorerName"
+  >
+    <img 
+      class="copy-and-share__image"
+      src="assets/share.png"
+    />
+  </a>
+</div>

@@ -1,0 +1,41 @@
+@import '/src/variables.scss';
+
+.status {
+  width: max-content;
+  font-weight: bold;
+  user-select: none;
+  cursor: pointer;
+  background: $black;
+  text-transform: uppercase;
+
+  &--success {
+    border: 1px solid $success;
+    color: $lightsuccess;
+  }
+
+  &--in-progress {
+    border: 1px solid $mediumpurple;
+    color: $purple;
+  }
+
+  &--pending {
+    border: 1px solid $warning;
+    color: $lightwarning;
+  }
+
+  &--error {
+    border: 1px solid $error;
+    color: $lighterror;
+  }
+
+  &--big {
+    padding: 8px 16px;
+    border-radius: 16px;
+  }
+
+  &--small {
+    padding: 4px 8px;
+    border-radius: 16px;
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,10 @@
+<div class="message">
+  <div class="message__value">{{ getPreview(transaction.messageId) }}</div>
+  <div class="message__value">{{ getDate(transaction.createdAt) }}</div>
+  <div class="message__value">{{ transaction.sourceChainId }}</div>
+  <div class="message__value">{{ getPreview(transaction.sourceAddress) }}</div>
+  <div class="message__value">{{ transaction.destinationChainId }}</div>
+  <div class="message__value">{{ getPreview(transaction.destinationAddress) }}</div>
+  <div class="message__value">{{ transaction.amount }}</div>
+  <div class="message__value">{{ transaction.tokenSymbol }}</div>
+</div>
