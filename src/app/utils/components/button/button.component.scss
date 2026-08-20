@@ -1,0 +1,41 @@
+@import '/src/variables.scss';
+
+.container {
+  position: relative;
+  cursor: pointer;
+  display: block;
+
+  &:hover &__button--inactive {
+    opacity: 0;
+  }
+
+  &:hover &__button--active {
+    opacity: 1;
+  }
+
+  &__button {
+    cursor: pointer;
+    font-size: 14px;
+    border: 1px solid $darkgray;
+    background: $black;
+    border-radius: 4px;
+    padding: 8px 24px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: max-content;
+
+    &--inactive {
+      position: relative;
+      background: $black;
+      color: $lightwhite;
+      opacity: 1;
+    }
+
+    &--active {
+      background: $purple-yellow-gradient;
+      color: $black;
+      opacity: 0;
+    }
+  }
+}

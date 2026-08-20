@@ -1,0 +1,6 @@
+<div [class]="'status status--' + size"
+  [class.status--success]="status.toLowerCase() === AtomicStatus.executed.toLowerCase() || status.toLowerCase() === DvpStatus.completed.toLowerCase()"
+  [class.status--in-progress]="status.toLowerCase() === AtomicStatus.in_progress.toLowerCase()"
+  [class.status--error]="status.toLowerCase() === AtomicStatus.rejected.toLowerCase() || status.toLowerCase() === AtomicStatus.reverted.toLowerCase() || status.toLowerCase() === DvpStatus.failed.toLowerCase() || status.toLowerCase() === DvpStatus.cancelled.toLowerCase() || status.toLowerCase() === DvpStatus.expired.toLowerCase()"
+  [class.status--pending]="status.toLowerCase() === AtomicStatus.pending.toLowerCase() || status.toLowerCase() === DvpStatus.pending.toLowerCase()"
+  [nz-tooltip]="tooltip">{{ status }}</div>

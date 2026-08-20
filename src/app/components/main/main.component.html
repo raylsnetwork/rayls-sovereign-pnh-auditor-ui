@@ -1,0 +1,47 @@
+<app-page class="page">
+  <div class="page__tags">
+    <ng-container *ngFor="let tag of getTags()">
+      <nz-tag *ngIf="isNotPageFilter(tag)" nzMode="closeable" (nzOnClose)="handleFilterClose(tag)">
+        {{ tag }}: {{ getPreview(filters[tag]) }}
+      </nz-tag>
+    </ng-container>
+  </div>
+  <form 
+    class="page__search" 
+    [formGroup]="form"
+    (submit)="onSubmit()"
+  >
+    <app-select 
+      class="page__search__dropdown"
+      [defaultOption]="defaultFilterOption"
+      [options]="filterOptions"
+      (onOptionChange)="onFilterChange($event)"
+    >
+    </app-select>
+    <div class="page__search__bar">
+      <div
+        class="page__search__bar__background"
+        [class.page__search__bar__background--active]="isFocused"
+      ></div>
+      <input 
+        class="page__search__bar__input" 
+        [placeholder]="'Type your ' + filter" 
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+        formControlName="search"
+      />
+      <div class="page__search__bar__icon">
+        <img class="page__search__bar__icon__image" src="assets/lupe.png" />
+      </div>
+    </div>
+    <app-button 
+      class="page__search__confirm"
+      text="Add Filter"
+    >
+    </app-button>
+  </form>
+  <div class="page__title">Latest Transactions</div>
+  <div class="page__transactions">
+    <app-messages-preview [transactions]="transactions" [page]="page"></app-messages-preview>
+  </div>
+</app-page>

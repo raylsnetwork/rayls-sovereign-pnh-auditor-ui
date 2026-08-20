@@ -1,0 +1,41 @@
+<app-page class="page">
+  <nz-breadcrumb class="page__breadcrumb">
+    <nz-breadcrumb-item>
+      <a routerLink="/">Main</a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>Batch Details</nz-breadcrumb-item>
+  </nz-breadcrumb>
+  <div class="page__header">
+    <h1 class="page__header__text">Batch Details</h1>
+  </div>
+  <div class="page__body">
+    <app-batch-transactions-preview 
+      [transactions]="transactionsList" 
+      [isLoading]="isLoading"
+    ></app-batch-transactions-preview>
+    <div class="pagination" *ngIf="totalPages > 1">
+      <div
+        class="pagination__page"
+        [ngClass]="{ 'pagination__page--active': currentPage === 1 }"
+        (click)="goToPage(1)"
+      >1</div>
+      <div class="pagination__divisor">...</div>
+      <div
+        class="pagination__page"
+        [ngClass]="{ 'pagination__page--active': currentPage === page }"
+        *ngFor="let page of getPages()"
+        (click)="goToPage(page)"
+      >
+        {{ page }}
+      </div>
+      <div class="pagination__divisor">...</div>
+      <div
+        class="pagination__page"
+        [ngClass]="{ 'pagination__page--active': currentPage === totalPages }"
+        (click)="goToPage(totalPages)"
+      >
+        {{ totalPages }}
+      </div>
+    </div>
+  </div>
+</app-page>

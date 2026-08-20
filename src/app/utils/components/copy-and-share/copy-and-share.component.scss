@@ -1,0 +1,22 @@
+@import '/src/variables.scss';
+
+.copy-and-share {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__image {
+    cursor: pointer;
+    filter: $black-to-purple-filter;
+    width: 20px;
+    height: 20px;
+  }
+}

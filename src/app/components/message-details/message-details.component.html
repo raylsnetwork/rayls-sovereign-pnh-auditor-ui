@@ -1,0 +1,217 @@
+<app-page class="page">
+  <nz-breadcrumb class="page__breadcrumb">
+    <nz-breadcrumb-item>
+      <a routerLink="/">Main</a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item *ngIf="isBatchTransaction()">
+      <a (click)="goToBatchDetailsPage()">Batch Details</a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item *ngIf="isEnygmaTransaction() && enygmaBatchId">
+      <a (click)="goToEnygmaDetailsPage(enygmaBatchId)">Enygma Details</a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>Message Details</nz-breadcrumb-item>
+  </nz-breadcrumb>
+  <div class="page__header">
+    <h1 class="page__header__text">Message Details</h1>
+  </div>
+  <div class="page__body">
+    <ng-container *ngIf="transaction">
+      <div class="page__body__row" *ngIf="transaction.messageId || transaction.messageId">
+        <div class="page__body__row__title">MessageId</div>
+        <div *ngIf="isBatchTransaction()" class="page__body__row__value page__body__row__value--lightgray">
+          {{ transaction.messageId }}
+          <app-copy-and-share field="MessageId" [value]="transaction.messageId">
+          </app-copy-and-share>
+        </div>
+        <div *ngIf="!isBatchTransaction()" class="page__body__row__value page__body__row__value--lightgray">
+          {{ transaction.messageId }}
+          <app-copy-and-share field="MessageId" [value]="transaction.messageId">
+          </app-copy-and-share>
+        </div>
+      </div>
+      <div class="page__body__row" *ngIf="showAddress(transaction.hubHash ?? '')">
+        <div class="page__body__row__title">PNH Transaction Hash</div>
+        <div class="page__body__row__value">
+          {{ transaction.hubHash }}
+          <app-copy-and-share field="PNH Transaction Hash" [value]="transaction.hubHash ?? ''">
+          </app-copy-and-share>
+        </div>
+      </div>
+      <div class="page__body__row" *ngIf="transaction.hubBlockNumber">
+        <div class="page__body__row__title">PNH Block Number</div>
+        <div class="page__body__row__value">
+          {{ transaction.hubBlockNumber }}
+          <app-copy-and-share field="PNH Block Number" [value]="transaction.hubBlockNumber">
+          </app-copy-and-share>
+        </div>
+      </div>
+      <div class="page__body__row" *ngIf="transaction.hubTimestamp">
+        <div class="page__body__row__title">PNH Timestamp</div>
+        <div class="page__body__row__value">
+          {{ getDate(transaction.hubTimestamp!) }}
+        </div>
+      </div>
+      <div class="page__body__row" *ngIf="showAddress(transaction.sourceTransactionHash)">
+        <div class="page__body__row__title">Source Transaction Hash</div>
+        <div class="page__body__row__value">
+          {{ transaction.sourceTransactionHash }}
+          <app-copy-and-share field="Source Transaction Hash" [value]="transaction.sourceTransactionHash">
+          </app-copy-and-share>
+        </div>
+      </div>
+      <div class="page__body__row" *ngIf="!isEnygmaTransaction() && transaction.sourceTimestamp">
+        <div class="page__body__row__title">Source Transaction Timestamp</div>
+        <div class="page__body__row__value">
+          <span class="page__body__row__value__date"> {{ getDate(transaction.sourceTimestamp) }}</span>
+        </div>
+      </div>
+      <div class="page__body__row" *ngIf="showAddress(transaction.destinationTransactionHash)">
+        <div class="page__body__row__title">Destination Transaction Hash</div>
+        <div class="page__body__row__value">
+          {{ transaction.destinationTransactionHash }}
+          <app-copy-and-share field="Destination Transaction Hash" [value]="transaction.destinationTransactionHash">
+          </app-copy-and-share>
+        </div>
+      </div>
+      <div class="page__body__row" *ngIf="showDestinationTimestamp()">
+        <div class="page__body__row__title">Destination Transaction Timestamp</div>
+        <div class="page__body__row__value">
+          <span class="page__body__row__value__date">{{ getDate(transaction.destinationTimestamp) }}</span>
+        </div>
+      </div>
+      <div class="page__body__row" *ngIf="transaction.sourceTransactionRevertHash">
+        <div class="page__body__row__title">Source Transaction Revert Hash</div>
+        <div class="page__body__row__value">
+          {{ transaction.sourceTransactionRevertHash }}
+          <app-copy-and-share field="Source Transaction Revert Hash" [value]="transaction.sourceTransactionRevertHash">
+          </app-copy-and-share>
+        </div>
+      </div>
+      <div class="page__body__row"
+        *ngIf="transaction.sourceRevertTimestamp && transaction.sourceRevertTimestamp != '0'">
+        <div class="page__body__row__title">Source Transaction Revert Timestamp</div>
+        <div class="page__body__row__value">
+          <span class="page__body__row__value__date"> {{ getDate(transaction.sourceRevertTimestamp) }}</span>
+        </div>
+      </div>
+      <div class="page__body__row"
+        *ngIf="!isEnygmaTransaction() && transaction.status && transaction.status.trim() !== ''">
+        <div class="page__body__row__title">Status</div>
+        <div class="page__body__row__value">
+          <app-status [status]="transaction.status"></app-status>
+        </div>
+      </div>
+      <div class="page__body__row" *ngIf="transaction.sourceChainId">
+        <div class="page__body__row__title">Source Chain ID</div>
+        <div class="page__body__row__value">
+          {{ transaction.sourceChainId }}
+          <app-copy-and-share field="Source ChainId" [value]="transaction.sourceChainId">
+          </app-copy-and-share>
+        </div>
+      </div>
+      <div class="page__body__row" *ngIf="transaction.destinationChainId">
+        <div class="page__body__row__title">Destination Chain ID</div>
+        <div class="page__body__row__value">
+          {{ transaction.destinationChainId }}
+          <app-copy-and-share field="Destination ChainId" [value]="transaction.destinationChainId">
+          </app-copy-and-share>
+        </div>
+      </div>
+      <div class="page__body__row" *ngIf="showAddress(transaction.sourceAddress)">
+        <div class="page__body__row__title">From Address</div>
+        <div class="page__body__row__value">
+          {{ transaction.sourceAddress }}
+          <app-copy-and-share field="From Address" [value]="transaction.sourceAddress">
+          </app-copy-and-share>
+        </div>
+      </div>
+      <div class="page__body__row" *ngIf="showAddress(transaction.destinationAddress)">
+        <div class="page__body__row__title">To Address</div>
+        <div class="page__body__row__value">
+          {{ transaction.destinationAddress }}
+          <app-copy-and-share field="To Address" [value]="transaction.destinationAddress">
+          </app-copy-and-share>
+        </div>
+      </div>
+      <div class="page__body__row">
+        <div class="page__body__row__title">Resource ID</div>
+        <div class="page__body__row__value">
+          {{ transaction.resourceId }}
+          <app-copy-and-share field="Resource ID" [value]="transaction.resourceId">
+          </app-copy-and-share>
+        </div>
+      </div>
+      <div class="page__body__row" *ngIf="!isEnygmaTransaction()">
+        <div class="page__body__row__title">Message Type</div>
+        <div class="page__body__row__value page__body__row__value--uppercase">
+          {{ transaction.messageType }}
+        </div>
+      </div>
+      <ng-container *ngIf="!isCustom(transaction.messageType)">
+        <div class="page__body__row">
+          <div class="page__body__row__title">Amount</div>
+          <div class="page__body__row__value">
+            {{ transaction.amount }}
+          </div>
+        </div>
+        <div class="page__body__row">
+          <div class="page__body__row__title">Token</div>
+          <div class="page__body__row__value">
+            {{ transaction.tokenSymbol }}
+          </div>
+        </div>
+        <div class="page__body__row" *ngIf="getProtocolField() && getProtocolField() !== ProtocolType.vanilla">
+          <div class="page__body__row__title">Protocol</div>
+          <div class="page__body__row__value">
+            {{ getProtocolField() }}
+          </div>
+        </div>
+        <div class="page__body__row" *ngIf="transaction.ercId">
+          <div class="page__body__row__title">Token ID</div>
+          <div class="page__body__row__value">
+            {{ transaction.ercId }}
+          </div>
+        </div>
+        <ng-container *ngIf="transaction.tokenMetadataImageUrl">
+          <div class="page__body__row">
+            <div class="page__body__row__title">Token Information</div>
+            <div class="page__body__row__value">
+              <img class="page__body__row__value__img" [src]="transaction.tokenMetadataImageUrl"
+                (error)="transaction.tokenMetadataImageUrl = 'assets/rayls-black-bg.png'" />
+              <div class="page__body__row__value__arrow"
+                [class.page__body__row__value__arrow--turn]="showTokenInformationDescription"
+                (click)="openTokenInformationDescription()">></div>
+              {{ transaction.tokenMetadataName }} - [{{ transaction.ercId }}]
+              <div #description class="page__body__row__value__description" *ngIf="showTokenInformationDescription">
+                <div class="page__body__row__value__description__title">Description</div>
+                <div class="page__body__row__value__description__value">
+                  <div class="page__body__row__value__description__value__subvalue"
+                    *ngFor="let trait of getTokenMetadataDescriptionTraits()">
+                    <div class="page__body__row__value__description__value__subvalue__title">{{ trait.type }}</div>
+                    <div>{{ trait.value }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="transaction.payload">
+        <div class="page__body__row">
+          <div class="page__body__row__title">Payload</div>
+          <div class="page__body__row__value page__body__row__value--break">
+            0x{{ transaction.payload }}
+            <app-copy-and-share field="Payload" [value]="'0x' + transaction.payload">
+            </app-copy-and-share>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="!transaction">
+      <div class="page__body__row" *ngFor="let row of [].constructor(10)">
+        <app-skeleton-loading class="page__body__row__loading"></app-skeleton-loading>
+        <app-skeleton-loading class="page__body__row__loading"></app-skeleton-loading>
+      </div>
+    </ng-container>
+  </div>
+</app-page>

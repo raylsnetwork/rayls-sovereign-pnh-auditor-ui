@@ -1,0 +1,43 @@
+@import '/src/variables.scss';
+
+.page {
+  width: 100vw;
+  height: 100vh;
+  background-color: $black;
+  overflow-x: hidden;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 1;
+
+  &__nav {
+    width: calc(100% - 128px);
+    padding: 32px 64px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    &__logo {
+      cursor: pointer;
+      height: 32px;
+    }
+
+    &__text {
+      text-align: center;
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-image: $purple-yellow-gradient;
+      font-size: 2rem;
+      font-weight: bold;
+      position: relative;
+      bottom: 0.1875rem;
+    }
+  }
+}

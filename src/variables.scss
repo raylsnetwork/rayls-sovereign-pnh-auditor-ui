@@ -1,0 +1,44 @@
+$white: #FFFFFF;
+$lightwhite: #EEEEEE;
+$mediumwhite: #CCCCCC;
+$darkwhite: #AAAAAA;
+$lightgray: #888888;
+$mediumgray: #444444;
+$darkgray: #222222;
+$lightblack: #1A1A1A;
+$black: #111111;
+
+$yellow: #ECFB3E;
+$lightyellow: #ECFB3EBF;
+$mediumyellow: #ECFB3E80;
+$darkyellow: #ECFB3E40;
+
+$purple: #B49AFF;
+$mediumpurple: #B49AFF80;
+$darkpurple: #B49AFF40;
+
+$green: #8CF78B;
+
+$success: #52c41a;
+$lightsuccess: #52c41aBF;
+$mediumsuccess: #52c41a80;
+$darksuccess: #52c41a40;
+
+$error: #ff4d4f;
+$lighterror: #ff4d4fBF;
+$mediumerror: #ff4d4f80;
+$darkerror: #ff4d4f40;
+
+$warning: #faad14;
+$lightwarning: #faad14BF;
+$mediumwarning: #faad1480;
+$darkwarning: #faad1440;
+
+$transition: cubic-bezier(.17,.67,.83,.67);
+
+$purple-yellow-gradient: linear-gradient(20deg, $purple, $yellow);
+
+$black-to-darkgray-filter: brightness(0) saturate(100%) invert(10%) sepia(92%) saturate(0%) hue-rotate(251deg) brightness(59%) contrast(85%);
+$black-to-gray-filter: brightness(0) saturate(100%) invert(100%) sepia(23%) saturate(953%) hue-rotate(177deg) brightness(100%) contrast(92%);
+$black-to-lightwhite-filter: brightness(0) saturate(100%) invert(95%) sepia(83%) saturate(3%) hue-rotate(330deg) brightness(106%) contrast(87%);
+$black-to-purple-filter: brightness(0) saturate(100%) invert(74%) sepia(50%) saturate(4199%) hue-rotate(208deg) brightness(103%) contrast(101%);

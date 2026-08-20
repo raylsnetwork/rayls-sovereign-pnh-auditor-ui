@@ -1,0 +1,21 @@
+@import '/src/variables.scss';
+
+.message {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+
+    padding: 1rem;
+    border: 1px solid $darkgray;
+    animation: fade ease .5s forwards;
+
+    &:hover {
+        background: $darkgray;
+        border: 1px solid $mediumgray;
+        cursor: pointer;
+    }
+
+    &__value {
+        color: $lightwhite;
+        font-size: 1rem;
+    }
+}

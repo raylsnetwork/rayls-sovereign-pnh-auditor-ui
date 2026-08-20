@@ -1,0 +1,272 @@
+<app-page class="page">
+    <nz-breadcrumb class="page__breadcrumb">
+        <nz-breadcrumb-item>
+            <a routerLink="/">Main</a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>Swap Details</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <div class="page__header">
+        <h1 class="page__header__text">Swap Details</h1>
+    </div>
+    <div class="page__body">
+        <ng-container *ngIf="hasData && !isLoading">
+            <!-- Common Information Section -->
+            <div class="page__body__section">
+                <div class="page__body__section__title">Common Information</div>
+
+                <div class="page__body__row">
+                    <div class="page__body__row__title">Shared ID</div>
+                    <div class="page__body__row__value">
+                        {{ sharedId }}
+                        <app-copy-and-share field="Shared ID" [value]="sharedId"></app-copy-and-share>
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="hubTxHash && showAddress(hubTxHash)">
+                    <div class="page__body__row__title">PNH Transaction Hash</div>
+                    <div class="page__body__row__value">
+                        {{ hubTxHash }}
+                        <app-copy-and-share field="PNH Transaction Hash" [value]="hubTxHash"></app-copy-and-share>
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="status">
+                    <div class="page__body__row__title">Status</div>
+                    <div class="page__body__row__value">
+                        <app-status [status]="status"></app-status>
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="protocol">
+                    <div class="page__body__row__title">Protocol</div>
+                    <div class="page__body__row__value">
+                        {{ protocol }}
+                    </div>
+                </div>
+
+                <!-- Swapped Tokens -->
+                <div class="page__body__row">
+                    <div class="page__body__row__title">Swapped Tokens</div>
+                    <div class="page__body__row__value page__body__row__value--stacked">
+                        <div class="page__body__row__value__swap-token">
+                            <span class="page__body__row__value__swap-token__name">{{ nodeA.tokenName || nodeA.messageType | uppercase }}</span>
+                        </div>
+                        <div class="page__body__row__value__swap-token">
+                            <span class="page__body__row__value__swap-token__name">{{ nodeB.tokenName || nodeB.messageType | uppercase }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Source Transaction Hash (shared) -->
+                <div class="page__body__row" *ngIf="showAddress(nodeA.sourceTransactionHash)">
+                    <div class="page__body__row__title">Source Transaction Hash</div>
+                    <div class="page__body__row__value">
+                        {{ nodeA.sourceTransactionHash }}
+                        <app-copy-and-share field="Source Tx Hash"
+                            [value]="nodeA.sourceTransactionHash"></app-copy-and-share>
+                    </div>
+                </div>
+
+                <!-- Destination Transaction Hash (shared) -->
+                <div class="page__body__row" *ngIf="showAddress(nodeA.destinationTransactionHash)">
+                    <div class="page__body__row__title">Destination Transaction Hash</div>
+                    <div class="page__body__row__value">
+                        {{ nodeA.destinationTransactionHash }}
+                        <app-copy-and-share field="Dest Tx Hash"
+                            [value]="nodeA.destinationTransactionHash"></app-copy-and-share>
+                    </div>
+                </div>
+
+                <!-- Timestamp (only the final PNH timestamp) -->
+                <div class="page__body__row" *ngIf="nodeA.hubTimestamp">
+                    <div class="page__body__row__title">Timestamp</div>
+                    <div class="page__body__row__value">
+                        {{ getDate(nodeA.hubTimestamp) }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Token A Flow -->
+            <div class="page__body__section">
+                <div class="page__body__section__title">
+                    {{ nodeA.messageType | uppercase }}
+                </div>
+
+                <div class="page__body__row" *ngIf="nodeA.tokenName">
+                    <div class="page__body__row__title">Token Name</div>
+                    <div class="page__body__row__value">
+                        {{ nodeA.tokenName }}
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="nodeA.tokenSymbol">
+                    <div class="page__body__row__title">Token Symbol</div>
+                    <div class="page__body__row__value">
+                        {{ nodeA.tokenSymbol }}
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="nodeA.sourceChainId">
+                    <div class="page__body__row__title">Source Chain ID</div>
+                    <div class="page__body__row__value">
+                        {{ nodeA.sourceChainId }}
+                        <app-copy-and-share field="Source Chain ID" [value]="nodeA.sourceChainId"></app-copy-and-share>
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="nodeA.destinationChainId">
+                    <div class="page__body__row__title">Destination Chain ID</div>
+                    <div class="page__body__row__value">
+                        {{ nodeA.destinationChainId }}
+                        <app-copy-and-share field="Dest Chain ID"
+                            [value]="nodeA.destinationChainId"></app-copy-and-share>
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="showAddress(nodeA.sourceAddress)">
+                    <div class="page__body__row__title">From Address</div>
+                    <div class="page__body__row__value">
+                        {{ nodeA.sourceAddress }}
+                        <app-copy-and-share field="From Address"
+                            [value]="nodeA.sourceAddress"></app-copy-and-share>
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="showAddress(nodeA.destinationAddress)">
+                    <div class="page__body__row__title">To Address</div>
+                    <div class="page__body__row__value">
+                        {{ nodeA.destinationAddress }}
+                        <app-copy-and-share field="To Address"
+                            [value]="nodeA.destinationAddress"></app-copy-and-share>
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="nodeA.resourceId">
+                    <div class="page__body__row__title">Resource ID</div>
+                    <div class="page__body__row__value">
+                        {{ nodeA.resourceId }}
+                        <app-copy-and-share field="Resource ID" [value]="nodeA.resourceId"></app-copy-and-share>
+                    </div>
+                </div>
+
+                <div class="page__body__row">
+                    <div class="page__body__row__title">Amount</div>
+                    <div class="page__body__row__value">
+                        {{ nodeA.amount }}
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="nodeA.ercId">
+                    <div class="page__body__row__title">Token ID</div>
+                    <div class="page__body__row__value">
+                        {{ nodeA.ercId }}
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="nodeA.payload">
+                    <div class="page__body__row__title">Payload</div>
+                    <div class="page__body__row__value page__body__row__value--break">
+                        0x{{ nodeA.payload }}
+                        <app-copy-and-share field="Payload" [value]="'0x' + nodeA.payload"></app-copy-and-share>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Token B Flow -->
+            <div class="page__body__section" *ngIf="nodeB">
+                <div class="page__body__section__title">
+                    {{ nodeB.messageType | uppercase }}
+                </div>
+
+                <div class="page__body__row" *ngIf="nodeB.tokenName">
+                    <div class="page__body__row__title">Token Name</div>
+                    <div class="page__body__row__value">
+                        {{ nodeB.tokenName }}
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="nodeB.tokenSymbol">
+                    <div class="page__body__row__title">Token Symbol</div>
+                    <div class="page__body__row__value">
+                        {{ nodeB.tokenSymbol }}
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="nodeB.sourceChainId">
+                    <div class="page__body__row__title">Source Chain ID</div>
+                    <div class="page__body__row__value">
+                        {{ nodeB.sourceChainId }}
+                        <app-copy-and-share field="Source Chain ID" [value]="nodeB.sourceChainId"></app-copy-and-share>
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="nodeB.destinationChainId">
+                    <div class="page__body__row__title">Destination Chain ID</div>
+                    <div class="page__body__row__value">
+                        {{ nodeB.destinationChainId }}
+                        <app-copy-and-share field="Dest Chain ID"
+                            [value]="nodeB.destinationChainId"></app-copy-and-share>
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="showAddress(nodeB.sourceAddress)">
+                    <div class="page__body__row__title">From Address</div>
+                    <div class="page__body__row__value">
+                        {{ nodeB.sourceAddress }}
+                        <app-copy-and-share field="From Address"
+                            [value]="nodeB.sourceAddress"></app-copy-and-share>
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="showAddress(nodeB.destinationAddress)">
+                    <div class="page__body__row__title">To Address</div>
+                    <div class="page__body__row__value">
+                        {{ nodeB.destinationAddress }}
+                        <app-copy-and-share field="To Address"
+                            [value]="nodeB.destinationAddress"></app-copy-and-share>
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="nodeB.resourceId">
+                    <div class="page__body__row__title">Resource ID</div>
+                    <div class="page__body__row__value">
+                        {{ nodeB.resourceId }}
+                        <app-copy-and-share field="Resource ID" [value]="nodeB.resourceId"></app-copy-and-share>
+                    </div>
+                </div>
+
+                <div class="page__body__row">
+                    <div class="page__body__row__title">Amount</div>
+                    <div class="page__body__row__value">
+                        {{ nodeB.amount }}
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="nodeB.ercId">
+                    <div class="page__body__row__title">Token ID</div>
+                    <div class="page__body__row__value">
+                        {{ nodeB.ercId }}
+                    </div>
+                </div>
+
+                <div class="page__body__row" *ngIf="nodeB.payload">
+                    <div class="page__body__row__title">Payload</div>
+                    <div class="page__body__row__value page__body__row__value--break">
+                        0x{{ nodeB.payload }}
+                        <app-copy-and-share field="Payload" [value]="'0x' + nodeB.payload"></app-copy-and-share>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <!-- Loading State -->
+        <ng-container *ngIf="isLoading">
+            <div class="page__body__section">
+                <div class="page__body__row" *ngFor="let row of [].constructor(8)">
+                    <app-skeleton-loading class="page__body__row__loading"></app-skeleton-loading>
+                    <app-skeleton-loading class="page__body__row__loading"></app-skeleton-loading>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</app-page>
